@@ -12,11 +12,17 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    role: {
+        type: String,
+        require: true,
+        default: "user",
+        enum: ['user', 'admin']
     }
 },
-{
-    timestamps: true,
-}
+    {
+        timestamps: true,
+    }
 );
 
 const User = mongoose.model("User", userSchema);
