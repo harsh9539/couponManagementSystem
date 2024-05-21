@@ -12,7 +12,7 @@ const sendErrorDev = (err, res) => {
   });
 }
 const sendErrorProd = (err, res) => {
-  if (err.isOperaional) {
+  if (err.isOperational) {
     res.status(err.statusCode).json({
       success: false,
       message: err.message,

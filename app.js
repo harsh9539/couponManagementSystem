@@ -3,11 +3,14 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import handleError from './middlewares/error.js';
 dotenv.config();
-import userRoutes from "./routes/userRoutes.js"
 import rateLimit from 'express-rate-limit';
 import helmet from "helmet";
 import ExpressMongoSanitize from 'express-mongo-sanitize';
 import xss from 'xss-clean';
+
+// Routes
+import authRoutes from "./routes/authRoutes.js"
+import userRoutes from "./routes/userRoutes.js"
 
 const app = express();
 app.use(express.json());
@@ -41,6 +44,7 @@ app.get('/', (req, res) => {
 
 
 
+app.use('/api/v1/auth',authRoutes);
 app.use('/api/v1/users',userRoutes);
 
 
