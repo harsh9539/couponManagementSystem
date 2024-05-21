@@ -1,7 +1,7 @@
 // Import the required modules
 import jwt from "jsonwebtoken";
 // Import DB Models
-import User from "../models/userModal.js";
+import User from "../models/userModel.js";
 // Import Async Error Handler Middleware
 import catchAsyncErrors from "./catchAsynErrors.js";
 // Import Utils
