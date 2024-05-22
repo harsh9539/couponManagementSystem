@@ -13,12 +13,6 @@ const transactionSchema = mongoose.Schema({
     ref: "User",
     index: true
   },
-  orderId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "Order",
-    index: true
-  },
   discount: {
     type: Number,
     required: true,
