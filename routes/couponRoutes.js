@@ -1,6 +1,6 @@
 import express from 'express';
 import { authorizeRoles, isAuthenticatedUser } from '../middlewares/auth';
-import { applyCoupon, createCoupon, deleteCoupon, getAllCoupons, getCouponById } from '../controllers/couponController';
+import { applyCoupon, createCoupon, deleteCoupon, getAllCoupons, getCouponById, updateCoupon } from '../controllers/couponController';
 const router = express.Router();
 
 

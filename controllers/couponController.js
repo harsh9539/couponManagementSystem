@@ -23,8 +23,8 @@ export const getAllCoupons = catchAsyncErrors(async (req, res, next) => {
 // @desc      Create a new coupon
 // @route     POST /api/v1/coupons
 // @access    Private/Admin
-export const createCoupon = catchAsyncErrors(async (req, res, next) => {
 
+export const createCoupon = catchAsyncErrors(async (req, res, next) => {
   const coupon = await Coupon.create(req.body);
 
   res.status(201).json({

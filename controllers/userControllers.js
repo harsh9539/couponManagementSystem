@@ -5,8 +5,10 @@ import catchAsyncErrors from "../middlewares/catchAsynErrors.js"
 import ErrorHandler from "../utils/errorHandler.js";
 
 export const testUserApi = (req, res) => {
+  const { password: _, ...userWithoutPassword } = req.user.toObject();
   res.status(200).json({
     message: "User Api Working successfully",
+    user : userWithoutPassword
   });
 };
 

@@ -11,6 +11,8 @@ import xss from 'xss-clean';
 // Routes
 import authRoutes from "./routes/authRoutes.js"
 import userRoutes from "./routes/userRoutes.js"
+import productRoutes from "./routes/productRoutes.js"
+import cartRoutes from "./routes/cartRoutes.js"
 
 const app = express();
 app.use(express.json());
@@ -19,8 +21,8 @@ app.use(cors());
 
 // limiting the api calls from same ip preventing DDOS attack
 const limiter = rateLimit({
-	windowMs: 15 * 60 * 1000,
-	limit: 100
+  windowMs: 15 * 60 * 1000,
+  limit: 100
 })
 app.use(limiter)
 
@@ -44,8 +46,10 @@ app.get('/', (req, res) => {
 
 
 
-app.use('/api/v1/auth',authRoutes);
-app.use('/api/v1/users',userRoutes);
+app.use('/api/v1/auth', authRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/products', productRoutes);
+app.use('/api/v1/cart', cartRoutes);
 
 
 
