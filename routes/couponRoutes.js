@@ -1,15 +1,15 @@
 import express from 'express';
-import { authorizeRoles, isAuthenticatedUser } from '../middlewares/auth';
-import { applyCoupon, createCoupon, deleteCoupon, getAllCoupons, getCouponById, updateCoupon } from '../controllers/couponController';
+import { authorizeRoles, isAuthenticatedUser } from '../middlewares/auth.js';
+import { applyCoupon, createCoupon, deleteCoupon, getAllCoupons, getCouponById, updateCoupon } from '../controllers/couponController.js';
 const router = express.Router();
 
 
 // Coupon Routes
-router.post('/coupons', isAuthenticatedUser, authorizeRoles("admin"), createCoupon);
-router.get('/coupons', getAllCoupons);
-router.get('/coupons/:id', getCouponById);
-router.put('/coupons/:id', isAuthenticatedUser, authorizeRoles("admin"), updateCoupon);
-router.delete('/coupons/:id', isAuthenticatedUser, authorizeRoles("admin"), deleteCoupon);
-router.post('/coupons/apply', isAuthenticatedUser, applyCoupon);
+router.post('/', isAuthenticatedUser, authorizeRoles("admin"), createCoupon);
+router.get('/', getAllCoupons);
+router.get('/:id', getCouponById);
+router.put('/:id', isAuthenticatedUser, authorizeRoles("admin"), updateCoupon);
+router.delete('/:id', isAuthenticatedUser, authorizeRoles("admin"), deleteCoupon);
+router.post('/apply', isAuthenticatedUser, applyCoupon);
 
 export default router;

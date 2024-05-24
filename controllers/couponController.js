@@ -13,7 +13,7 @@ export const testCouponApi = (req, res) => {
 // @route     GET /api/v1/coupons
 // @access    Public
 export const getAllCoupons = catchAsyncErrors(async (req, res, next) => {
-  const coupons = await Coupon.find();
+  const coupons = await Coupon.find({ status: 'active' });
   res.status(200).json({
     success: true,
     coupons,
@@ -94,5 +94,5 @@ export const deleteCoupon = catchAsyncErrors(async (req, res, next) => {
 // @route     POST /api/v1/coupons/apply
 // @access    Private
 export const applyCoupon = catchAsyncErrors(async (req, res, next) => {
-  
+
 });
