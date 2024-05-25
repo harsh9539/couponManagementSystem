@@ -12,7 +12,25 @@ const cartModel = mongoose.Schema({
       required: true,
       ref: "Product",
     },
-  ]
+  ],
+  totalAmount: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  discountedAmount: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  couponCode: {
+    type: String,
+    default: "",
+  },
+  isDiscountAvailable: {
+    type: Boolean,
+    default: false,
+  }
 },
   {
     timestamps: true,

@@ -1,6 +1,8 @@
 import Coupon from "../models/couponModel.js"
+import Cart from "../models/cartModel.js"
 import catchAsyncErrors from "../middlewares/catchAsynErrors.js"
 import ErrorHandler from "../utils/errorHandler.js";
+import { updateCartTotals } from "../services/updateCartTotals.js";
 
 
 export const testCouponApi = (req, res) => {
@@ -93,6 +95,18 @@ export const deleteCoupon = catchAsyncErrors(async (req, res, next) => {
 // @desc      Apply coupon
 // @route     POST /api/v1/coupons/apply
 // @access    Private
+
 export const applyCoupon = catchAsyncErrors(async (req, res, next) => {
 
+  const { couponCode, cartId } = req.body;
+  try {
+    const updatedCart = await updateCartTotals(cartId, couponCode);
+    res.status(200).json({
+      success: true,
+      message: 'Coupon applied successfully',
+      data: updatedCart,
+    });
+  } catch (error) {
+    return next(error);
+  }
 });

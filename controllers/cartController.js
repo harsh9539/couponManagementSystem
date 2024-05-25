@@ -1,6 +1,8 @@
 import Cart from "../models/cartModel.js"
 import catchAsyncErrors from "../middlewares/catchAsynErrors.js"
 import ErrorHandler from "../utils/errorHandler.js";
+import Product from "../models/productModel.js";
+import { updateCartTotals } from "../services/updateCartTotals.js";
 
 
 
@@ -9,30 +11,50 @@ import ErrorHandler from "../utils/errorHandler.js";
 // @access    Private
 
 export const createOrUpdateCart = catchAsyncErrors(async (req, res, next) => {
-  const { product } = req.body;
+  const { productId } = req.body;
   const user = req.user.id;
+
+  const product = await Product.findById(productId);
+  if (!product) {
+    return next(new ErrorHandler("Product not found", 404));
+  }
 
   let cart = await Cart.findOne({ user });
 
   if (!cart) {
-    cart = new Cart({ user, cartItems: [product] });
+    cart = new Cart({
+      user,
+      cartItems: [productId],
+      totalAmount: product.price,
+      discountedAmount: product.price,
+    });
+    await cart.save()
+    res.status(201).json({
+      success: true,
+      message: 'Cart updated successfully',
+      data: cart,
+    });
   } else {
-    const isProductInCart = cart.cartItems.includes(product);
+    const isProductInCart = cart.cartItems.includes(productId);
 
     if (!isProductInCart) {
-      cart.cartItems.push(product);
+      cart.cartItems.push(productId);
+      cart.totalAmount += product.price;
+      cart.discountedAmount += product.price;
+      await cart.save()
+      if (cart.couponCode !== "") {
+
+        const updateCart = await updateCartTotals(cart.id, cart.couponCode)
+        res.status(201).json({
+          success: true,
+          message: 'Cart updated successfully',
+          data: updateCart,
+        });
+      }
     } else {
       return next(new ErrorHandler("Product is already in the cart", 400));
     }
   }
-
-  await cart.save();
-
-  res.status(201).json({
-    success: true,
-    message: 'Cart updated successfully',
-    data: cart,
-  });
 });
 
 
@@ -43,7 +65,7 @@ export const createOrUpdateCart = catchAsyncErrors(async (req, res, next) => {
 
 export const getCart = catchAsyncErrors(async (req, res, next) => {
   const userId = req.user.id;
-
+  console.log(userId)
   const cart = await Cart.findOne({ user: userId }).populate('cartItems');
 
   if (!cart) {
