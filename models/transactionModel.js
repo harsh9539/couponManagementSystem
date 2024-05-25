@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const transactionSchema = mongoose.Schema({
   couponId: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
     ref: "Coupon",
     index: true
   },
@@ -13,7 +12,7 @@ const transactionSchema = mongoose.Schema({
     ref: "User",
     index: true
   },
-  discount: {
+  discountAmount: {
     type: Number,
     required: true,
   },
@@ -21,13 +20,12 @@ const transactionSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  isPercentage: {
+  isDiscountAvailable: {
     type: Boolean,
     required: true,
   },
   couponCode: {
     type: String,
-    required: true,
   },
   status: {
     type: String,

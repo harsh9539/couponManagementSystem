@@ -1,10 +1,14 @@
 import express from 'express';
-import { testUserApi } from '../controllers/userControllers.js';
+import { createTransaction, getAllTransactions, getTransactionById } from '../controllers/transactionController.js';
+import { isAuthenticatedUser } from '../middlewares/auth.js';
+
 
 const router = express.Router();
 
 
-router.get('/', testUserApi);
+router.get('/', isAuthenticatedUser, getAllTransactions);
+router.get('/:id', isAuthenticatedUser, getTransactionById);
+router.post("/start", isAuthenticatedUser, createTransaction);
 
 
 export default router;
